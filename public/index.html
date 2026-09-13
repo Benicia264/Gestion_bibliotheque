@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bibliothèque de quartier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">B</span>
+      <div>
+        <h1>Bibliothèque</h1>
+        <p>de quartier</p>
+      </div>
+    </div>
+
+    <nav>
+      <button class="nav-link active" data-section="tableau-de-bord">Tableau de bord</button>
+      <button class="nav-link" data-section="auteurs">Auteurs</button>
+      <button class="nav-link" data-section="livres">Livres</button>
+      <button class="nav-link" data-section="adherents">Adhérents</button>
+      <button class="nav-link" data-section="emprunts">Emprunts</button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <span id="clock-status" class="status-dot"></span>
+      <span id="api-status-label">Connexion à l'API…</span>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- TABLEAU DE BORD -->
+    <section id="tableau-de-bord" class="view active">
+      <header class="view-header">
+        <h2>Tableau de bord</h2>
+        <p>Vue d'ensemble de l'activité de la bibliothèque.</p>
+      </header>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <p class="stat-label">Livres au catalogue</p>
+          <p class="stat-value" id="stat-livres">—</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Adhérents inscrits</p>
+          <p class="stat-value" id="stat-adherents">—</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Emprunts en cours</p>
+          <p class="stat-value" id="stat-en-cours">—</p>
+        </div>
+        <div class="stat-card stat-card--alert">
+          <p class="stat-label">Emprunts en retard</p>
+          <p class="stat-value" id="stat-retard">—</p>
+        </div>
+      </div>
+
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <p class="highlight-label">Livre le plus emprunté</p>
+          <p class="highlight-value" id="stat-top-livre">—</p>
+        </div>
+        <div class="highlight-card">
+          <p class="highlight-label">Adhérent le plus actif</p>
+          <p class="highlight-value" id="stat-top-adherent">—</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUTEURS -->
+    <section id="auteurs" class="view">
+      <header class="view-header">
+        <h2>Auteurs</h2>
+        <p>Gérer les auteurs référencés dans le catalogue.</p>
+      </header>
+
+      <div class="toolbar">
+        <button class="btn btn-primary" id="btn-nouvel-auteur">Ajouter un auteur</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Nationalité</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="auteurs-tbody">
+            <tr><td colspan="3" class="empty-row">Chargement…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LIVRES -->
+    <section id="livres" class="view">
+      <header class="view-header">
+        <h2>Livres</h2>
+        <p>Rechercher, ajouter et gérer le catalogue.</p>
+      </header>
+
+      <div class="toolbar">
+        <input type="search" id="livres-recherche" placeholder="Rechercher un titre ou un auteur…">
+        <button class="btn btn-primary" id="btn-nouveau-livre">Ajouter un livre</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Auteur</th>
+              <th>Année</th>
+              <th>Statut</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="livres-tbody">
+            <tr><td colspan="5" class="empty-row">Chargement…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="livres-pagination"></div>
+    </section>
+
+    <!-- ADHERENTS -->
+    <section id="adherents" class="view">
+      <header class="view-header">
+        <h2>Adhérents</h2>
+        <p>Liste des adhérents inscrits et leur historique d'emprunts.</p>
+      </header>
+
+      <div class="toolbar">
+        <button class="btn btn-primary" id="btn-nouvel-adherent">Ajouter un adhérent</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Contact</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="adherents-tbody">
+            <tr><td colspan="3" class="empty-row">Chargement…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- EMPRUNTS -->
+    <section id="emprunts" class="view">
+      <header class="view-header">
+        <h2>Emprunts</h2>
+        <p>Emprunts en cours et en retard.</p>
+      </header>
+
+      <div class="toolbar">
+        <button class="btn btn-primary" id="btn-nouvel-emprunt">Enregistrer un emprunt</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Livre</th>
+              <th>Adhérent</th>
+              <th>Emprunté le</th>
+              <th>Retour prévu</th>
+              <th>Statut</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="emprunts-tbody">
+            <tr><td colspan="6" class="empty-row">Chargement…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODALE générique -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Titre</h3>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <form id="modal-form"></form>
+  </div>
+</div>
+
+<!-- Notifications -->
+<div class="toast-stack" id="toast-stack"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

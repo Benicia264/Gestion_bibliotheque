@@ -9,7 +9,7 @@ const getAllAdherents = async () => {
 //Ajouter un adhérent
 const createAdherent = async (nom, contact, date_inscription) => {
     const result = await pool.query(
-        'INSERT INTO adherent(nom, contact, date_inscription) VALUES($1, $2, $3) RETURNING *',
+        'INSERT INTO adherents(nom, contact, date_inscription) VALUES($1, $2, $3) RETURNING *',
         [nom, contact, date_inscription]
     );
     return result.rows[0];
@@ -18,7 +18,7 @@ const createAdherent = async (nom, contact, date_inscription) => {
 //Modifier un adhérent
 const updateAdherent = async (id,  nom, contact, date_inscription) => {
     const result = await pool.query(
-        'UPDATE adherent SET nom=$1, contact=$2, date_inscription=$3 WHERE id=$4 RETURNING *',
+        'UPDATE adherents SET nom=$1, contact=$2, date_inscription=$3 WHERE id=$4 RETURNING *',
         [nom, contact, date_inscription, id]
     );
     return result.rows[0];
@@ -26,7 +26,7 @@ const updateAdherent = async (id,  nom, contact, date_inscription) => {
 
 //Supprimer un adhérent
 const deleteAdherent = async (id) => {
-    const result = await pool.query('DELETE FROM adherent WHERE id=$1 RETURNING *', [id]);
+    const result = await pool.query('DELETE FROM adherents WHERE id=$1 RETURNING *', [id]);
     return result.rows[0];
 }
 
