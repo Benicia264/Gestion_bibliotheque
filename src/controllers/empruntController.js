@@ -113,7 +113,7 @@ const createEmprunt = async (req, res) => {
 
         await livreModel.updateStatutLivre(
             livre_id,
-            "emprunté"
+            "emprunte"
         );
 
 

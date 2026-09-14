@@ -1,1291 +1,246 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Bibliothèque — Dashboard</title>
-
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- Police -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Conservation du thème -->
-    <script>
-        (() => {
-            const savedTheme = localStorage.getItem("bibliotheque-theme");
-
-            document.documentElement.dataset.theme =
-                savedTheme === "dark" ? "dark" : "light";
-        })();
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bibliothèque de quartier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <div class="app">
 
-    <!-- =====================================================
-         BARRE MOBILE
-    ====================================================== -->
-    <header class="mobile-topbar">
+    <!-- BARRE MOBILE -->
+    <header class="mobile-header">
+      <div class="mobile-brand">
+        <span class="mobile-brand-mark">B</span>
+        <span>Bibliothèque</span>
+      </div>
 
-        <!-- Bouton hamburger -->
-        <button
-            type="button"
-            class="menu-toggle"
-            id="menu-toggle"
-            aria-label="Ouvrir le menu"
-            aria-controls="sidebar"
-            aria-expanded="false"
-        >
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <!-- Logo mobile -->
-        <div class="mobile-brand">
-
-            <svg
-                class="brand-logo"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-            >
-                <path
-                    d="M4 5.5C4 4.672 4.672 4 5.5 4H9C10.657 4 12 5.343 12 7V20C12 18.343 10.657 17 9 17H5.5C4.672 17 4 17.672 4 18.5V5.5Z"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-
-                <path
-                    d="M20 5.5C20 4.672 19.328 4 18.5 4H15C13.343 4 12 5.343 12 7V20C12 18.343 13.343 17 15 17H18.5C19.328 17 20 17.672 20 18.5V5.5Z"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-
-            <span>Bibliothèque</span>
-
-        </div>
-
-
-        <!-- Bouton thème mobile -->
-        <button
-            type="button"
-            class="theme-toggle theme-toggle--mobile"
-            data-theme-toggle
-            aria-label="Activer le mode nuit"
-        >
-
-            <svg
-                class="theme-icon theme-icon-sun"
-                data-theme-icon-sun
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-            >
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="4"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                />
-
-                <path
-                    d="M12 2V4"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-
-                <path
-                    d="M12 20V22"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-
-                <path
-                    d="M4.93 4.93L6.34 6.34"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-
-                <path
-                    d="M17.66 17.66L19.07 19.07"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-
-                <path
-                    d="M2 12H4"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-
-                <path
-                    d="M20 12H22"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-
-                <path
-                    d="M4.93 19.07L6.34 17.66"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-
-                <path
-                    d="M17.66 6.34L19.07 4.93"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                />
-            </svg>
-
-            <svg
-                class="theme-icon theme-icon-moon"
-                data-theme-icon-moon
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-            >
-                <path
-                    d="M20.5 15.5C19.48 16.02 18.32 16.31 17.1 16.31C13.08 16.31 9.82 13.05 9.82 9.03C9.82 6.81 10.82 4.82 12.39 3.5C12.27 3.49 12.14 3.48 12 3.48C7.31 3.48 3.5 7.29 3.5 11.98C3.5 16.67 7.31 20.48 12 20.48C16.07 20.48 19.48 17.62 20.5 15.5Z"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-
-        </button>
-
+      <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
-
-    <!-- =====================================================
-         OVERLAY MOBILE
-    ====================================================== -->
-    <div
-        class="sidebar-overlay"
-        id="sidebar-overlay"
-        aria-hidden="true"
-    ></div>
-
-
-    <!-- =====================================================
-         APPLICATION
-    ====================================================== -->
-    <div class="app">
-
-
-        <!-- =================================================
-             SIDEBAR
-        ================================================== -->
-        <aside
-            class="sidebar"
-            id="sidebar"
-            aria-label="Menu principal"
-        >
-
-            <!-- Brand -->
-            <div class="brand">
-
-                <div class="brand-logo-wrapper">
-
-                    <svg
-                        class="brand-logo"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M4 5.5C4 4.672 4.672 4 5.5 4H9C10.657 4 12 5.343 12 7V20C12 18.343 10.657 17 9 17H5.5C4.672 17 4 17.672 4 18.5V5.5Z"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-
-                        <path
-                            d="M20 5.5C20 4.672 19.328 4 18.5 4H15C13.343 4 12 5.343 12 7V20C12 18.343 13.343 17 15 17H18.5C19.328 17 20 17.672 20 18.5V5.5Z"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-
-                </div>
-
-                <div class="brand-text">
-                    <strong>Bibliothèque</strong>
-                    <span>Gestion</span>
-                </div>
-
-            </div>
-
-
-            <!-- Navigation -->
-            <nav class="nav">
-
-                <!-- Dashboard -->
-                <button
-                    type="button"
-                    class="nav-item active"
-                    data-section="dashboard"
-                >
-
-                    <svg
-                        class="nav-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <rect
-                            x="4"
-                            y="4"
-                            width="6"
-                            height="6"
-                            rx="1"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                        />
-
-                        <rect
-                            x="14"
-                            y="4"
-                            width="6"
-                            height="6"
-                            rx="1"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                        />
-
-                        <rect
-                            x="4"
-                            y="14"
-                            width="6"
-                            height="6"
-                            rx="1"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                        />
-
-                        <rect
-                            x="14"
-                            y="14"
-                            width="6"
-                            height="6"
-                            rx="1"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                        />
-                    </svg>
-
-                    <span>Dashboard</span>
-
-                </button>
-
-
-                <!-- Auteurs -->
-                <button
-                    type="button"
-                    class="nav-item"
-                    data-section="auteurs"
-                >
-
-                    <svg
-                        class="nav-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M14 4L20 10"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M5 19L6.2 14.8L16.8 4.2C17.46 3.54 18.54 3.54 19.2 4.2L19.8 4.8C20.46 5.46 20.46 6.54 19.8 7.2L9.2 17.8L5 19Z"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-
-                        <path
-                            d="M4 21H20"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-                    </svg>
-
-                    <span>Auteurs</span>
-
-                </button>
-
-
-                <!-- Livres -->
-                <button
-                    type="button"
-                    class="nav-item"
-                    data-section="livres"
-                >
-
-                    <svg
-                        class="nav-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M5 4.5C5 3.67 5.67 3 6.5 3H18C18.55 3 19 3.45 19 4V19C19 19.55 18.55 20 18 20H6.5C5.67 20 5 19.33 5 18.5V4.5Z"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linejoin="round"
-                        />
-
-                        <path
-                            d="M5 17H17"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M9 7H15"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M9 10H15"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-                    </svg>
-
-                    <span>Livres</span>
-
-                </button>
-
-
-                <!-- Adhérents -->
-                <button
-                    type="button"
-                    class="nav-item"
-                    data-section="adherents"
-                >
-
-                    <svg
-                        class="nav-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <circle
-                            cx="9"
-                            cy="8"
-                            r="3"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                        />
-
-                        <path
-                            d="M3.5 19C3.5 15.96 5.96 13.5 9 13.5C12.04 13.5 14.5 15.96 14.5 19"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M15 5.5C17.21 5.5 19 7.29 19 9.5"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M16 13.5C18.62 14.01 20.5 16.31 20.5 19"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-                    </svg>
-
-                    <span>Adhérents</span>
-
-                </button>
-
-
-                <!-- Emprunts -->
-                <button
-                    type="button"
-                    class="nav-item"
-                    data-section="emprunts"
-                >
-
-                    <svg
-                        class="nav-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M7 7H19"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M17 5L19 7L17 9"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-
-                        <path
-                            d="M17 17H5"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                        />
-
-                        <path
-                            d="M7 15L5 17L7 19"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-
-                    <span>Emprunts</span>
-
-                </button>
-
-            </nav>
-
-
-            <!-- =================================================
-                 BOUTON MODE JOUR / NUIT
-            ================================================== -->
-            <button
-                type="button"
-                class="theme-toggle theme-toggle--sidebar"
-                data-theme-toggle
-                aria-label="Activer le mode nuit"
-            >
-
-                <svg
-                    class="theme-icon theme-icon-sun"
-                    data-theme-icon-sun
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                >
-                    <circle
-                        cx="12"
-                        cy="12"
-                        r="4"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    />
-
-                    <path
-                        d="M12 2V4"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M12 20V22"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M4.93 4.93L6.34 6.34"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M17.66 17.66L19.07 19.07"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M2 12H4"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M20 12H22"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M4.93 19.07L6.34 17.66"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M17.66 6.34L19.07 4.93"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-                </svg>
-
-
-                <svg
-                    class="theme-icon theme-icon-moon"
-                    data-theme-icon-moon
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M20.5 15.5C19.48 16.02 18.32 16.31 17.1 16.31C13.08 16.31 9.82 13.05 9.82 9.03C9.82 6.81 10.82 4.82 12.39 3.5C12.27 3.49 12.14 3.48 12 3.48C7.31 3.48 3.5 7.29 3.5 11.98C3.5 16.67 7.31 20.48 12 20.48C16.07 20.48 19.48 17.62 20.5 15.5Z"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-
-
-                <span
-                    class="theme-text"
-                    data-theme-text
-                >
-                    Mode nuit
-                </span>
-
-            </button>
-
-
-            <!-- =================================================
-                 STATUT API
-            ================================================== -->
-            <div class="sidebar-foot">
-
-                <div class="api-status">
-
-                    <span class="status-dot"></span>
-
-                    <div>
-                        <strong>API connectée</strong>
-                        <span>Serveur opérationnel</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </aside>
-
-
-        <!-- =================================================
-             CONTENU PRINCIPAL
-        ================================================== -->
-        <main class="content">
-
-
-            <!-- =================================================
-                 DASHBOARD
-            ================================================== -->
-            <section
-                class="section active"
-                id="dashboard"
-            >
-
-                <div class="page-header">
-
-                    <div>
-
-                        <p class="eyebrow">
-                            Vue d'ensemble
-                        </p>
-
-                        <h1>
-                            Dashboard
-                        </h1>
-
-                        <p class="page-description">
-                            Gérez votre bibliothèque et consultez les statistiques.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Statistiques principales -->
-                <div class="stats-grid">
-
-                    <!-- Livres -->
-                    <div class="stat-card">
-
-                        <div class="stat-icon">
-
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M5 4.5C5 3.67 5.67 3 6.5 3H18C18.55 3 19 3.45 19 4V19C19 19.55 18.55 20 18 20H6.5C5.67 20 5 19.33 5 18.5V4.5Z"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linejoin="round"
-                                />
-
-                                <path
-                                    d="M5 17H17"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                />
-                            </svg>
-
-                        </div>
-
-                        <div class="stat-content">
-
-                            <span>Total livres</span>
-
-                            <strong id="stat-livres">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Auteurs -->
-                    <div class="stat-card">
-
-                        <div class="stat-icon">
-
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M14 4L20 10"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                />
-
-                                <path
-                                    d="M5 19L6.2 14.8L16.8 4.2C17.46 3.54 18.54 3.54 19.2 4.2L19.8 4.8C20.46 5.46 20.46 6.54 19.8 7.2L9.2 17.8L5 19Z"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                            </svg>
-
-                        </div>
-
-                        <div class="stat-content">
-
-                            <span>Auteurs</span>
-
-                            <strong id="stat-auteurs">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Adhérents -->
-                    <div class="stat-card">
-
-                        <div class="stat-icon">
-
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <circle
-                                    cx="9"
-                                    cy="8"
-                                    r="3"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                />
-
-                                <path
-                                    d="M3.5 19C3.5 15.96 5.96 13.5 9 13.5C12.04 13.5 14.5 15.96 14.5 19"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                />
-
-                                <path
-                                    d="M16 13.5C18.62 14.01 20.5 16.31 20.5 19"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                />
-                            </svg>
-
-                        </div>
-
-                        <div class="stat-content">
-
-                            <span>Adhérents</span>
-
-                            <strong id="stat-adherents">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Emprunts -->
-                    <div class="stat-card">
-
-                        <div class="stat-icon">
-
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M7 7H19"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                />
-
-                                <path
-                                    d="M17 5L19 7L17 9"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-
-                                <path
-                                    d="M17 17H5"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                />
-
-                                <path
-                                    d="M7 15L5 17L7 19"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                            </svg>
-
-                        </div>
-
-                        <div class="stat-content">
-
-                            <span>Emprunts</span>
-
-                            <strong id="stat-emprunts">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Dashboard secondaire -->
-                <div class="dashboard-grid">
-
-                    <!-- Statistiques -->
-                    <div class="card">
-
-                        <div class="card-header">
-
-                            <div>
-
-                                <h2>
-                                    Statistiques
-                                </h2>
-
-                                <p>
-                                    Vue globale de l'activité.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div
-                            id="statistics-container"
-                            class="statistics-container"
-                        >
-                            <!-- Statistiques injectées en JavaScript -->
-                        </div>
-
-                    </div>
-
-
-                    <!-- Derniers emprunts -->
-                    <div class="card">
-
-                        <div class="card-header">
-
-                            <div>
-
-                                <h2>
-                                    Derniers emprunts
-                                </h2>
-
-                                <p>
-                                    Les derniers livres empruntés.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div
-                            id="recent-emprunts"
-                            class="recent-emprunts"
-                        >
-                            <!-- Emprunts injectés en JavaScript -->
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 AUTEURS
-            ================================================== -->
-            <section
-                class="section"
-                id="auteurs"
-            >
-
-                <div class="page-header">
-
-                    <div>
-
-                        <p class="eyebrow">
-                            Gestion
-                        </p>
-
-                        <h1>
-                            Auteurs
-                        </h1>
-
-                        <p class="page-description">
-                            Consultez et gérez les auteurs de la bibliothèque.
-                        </p>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="add-auteur"
-                    >
-                        + Ajouter un auteur
-                    </button>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Actions</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="auteurs-table">
-                                <!-- Données injectées en JavaScript -->
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 LIVRES
-            ================================================== -->
-            <section
-                class="section"
-                id="livres"
-            >
-
-                <div class="page-header">
-
-                    <div>
-
-                        <p class="eyebrow">
-                            Gestion
-                        </p>
-
-                        <h1>
-                            Livres
-                        </h1>
-
-                        <p class="page-description">
-                            Consultez et gérez les livres disponibles.
-                        </p>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="add-livre"
-                    >
-                        + Ajouter un livre
-                    </button>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Titre</th>
-                                    <th>Auteur</th>
-                                    <th>Année</th>
-                                    <th>Actions</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="livres-table">
-                                <!-- Données injectées en JavaScript -->
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 ADHÉRENTS
-            ================================================== -->
-            <section
-                class="section"
-                id="adherents"
-            >
-
-                <div class="page-header">
-
-                    <div>
-
-                        <p class="eyebrow">
-                            Gestion
-                        </p>
-
-                        <h1>
-                            Adhérents
-                        </h1>
-
-                        <p class="page-description">
-                            Consultez et gérez les adhérents de la bibliothèque.
-                        </p>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="add-adherent"
-                    >
-                        + Ajouter un adhérent
-                    </button>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Email</th>
-                                    <th>Actions</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="adherents-table">
-                                <!-- Données injectées en JavaScript -->
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 EMPRUNTS
-            ================================================== -->
-            <section
-                class="section"
-                id="emprunts"
-            >
-
-                <div class="page-header">
-
-                    <div>
-
-                        <p class="eyebrow">
-                            Gestion
-                        </p>
-
-                        <h1>
-                            Emprunts
-                        </h1>
-
-                        <p class="page-description">
-                            Suivez les emprunts et les retours de livres.
-                        </p>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="add-emprunt"
-                    >
-                        + Nouvel emprunt
-                    </button>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Livre</th>
-                                    <th>Adhérent</th>
-                                    <th>Date emprunt</th>
-                                    <th>Date retour</th>
-                                    <th>Statut</th>
-                                    <th>Actions</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="emprunts-table">
-                                <!-- Données injectées en JavaScript -->
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </main>
-
-    </div>
-
-
-    <!-- =====================================================
-         MODAL
-    ====================================================== -->
-    <div
-        class="modal"
-        id="modal"
-        aria-hidden="true"
-    >
-
-        <div
-            class="modal-overlay"
-            data-modal-close
-        ></div>
-
-
-        <div
-            class="modal-content"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modal-title"
-        >
-
-            <div class="modal-header">
-
-                <div>
-
-                    <h2 id="modal-title">
-                        Formulaire
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="modal-close"
-                    data-modal-close
-                    aria-label="Fermer"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div
-                class="modal-body"
-                id="modal-body"
-            >
-                <!-- Contenu injecté en JavaScript -->
-            </div>
-
+    <!-- VOILE derrière le menu mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">B</span>
+        <div>
+          <h1>Bibliothèque</h1>
+          <p>de quartier</p>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-link active" data-section="tableau-de-bord">Tableau de bord</button>
+        <button class="nav-link" data-section="auteurs">Auteurs</button>
+        <button class="nav-link" data-section="livres">Livres</button>
+        <button class="nav-link" data-section="adherents">Adhérents</button>
+        <button class="nav-link" data-section="emprunts">Emprunts</button>
+      </nav>
+
+      <button class="theme-toggle" id="theme-toggle">
+        <span id="theme-icon">☾</span>
+        <span id="theme-label">Mode nuit</span>
+      </button>
+
+      <div class="sidebar-foot">
+        <span id="clock-status" class="status-dot"></span>
+        <span id="api-status-label">Connexion à l'API…</span>
+      </div>
+    </aside>
+
+    <main class="content">
+
+      <!-- TABLEAU DE BORD -->
+      <section id="tableau-de-bord" class="view active">
+        <header class="view-header">
+          <h2>Tableau de bord</h2>
+          <p>Vue d'ensemble de l'activité de la bibliothèque.</p>
+        </header>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <p class="stat-label">Livres au catalogue</p>
+            <p class="stat-value" id="stat-livres">—</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Adhérents inscrits</p>
+            <p class="stat-value" id="stat-adherents">—</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Emprunts en cours</p>
+            <p class="stat-value" id="stat-en-cours">—</p>
+          </div>
+          <div class="stat-card stat-card--alert">
+            <p class="stat-label">Emprunts en retard</p>
+            <p class="stat-value" id="stat-retard">—</p>
+          </div>
         </div>
 
+        <div class="highlight-grid">
+          <div class="highlight-card">
+            <p class="highlight-label">Livre le plus emprunté</p>
+            <p class="highlight-value" id="stat-top-livre">—</p>
+          </div>
+          <div class="highlight-card">
+            <p class="highlight-label">Adhérent le plus actif</p>
+            <p class="highlight-value" id="stat-top-adherent">—</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTEURS -->
+      <section id="auteurs" class="view">
+        <header class="view-header">
+          <h2>Auteurs</h2>
+          <p>Gérer les auteurs référencés dans le catalogue.</p>
+        </header>
+
+        <div class="toolbar">
+          <button class="btn btn-primary" id="btn-nouvel-auteur">Ajouter un auteur</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Nationalité</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="auteurs-tbody">
+              <tr>
+                <td colspan="3" class="empty-row">Chargement…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- LIVRES -->
+      <section id="livres" class="view">
+        <header class="view-header">
+          <h2>Livres</h2>
+          <p>Rechercher, ajouter et gérer le catalogue.</p>
+        </header>
+
+        <div class="toolbar">
+          <input type="search" id="livres-recherche" placeholder="Rechercher un titre ou un auteur…">
+          <button class="btn btn-primary" id="btn-nouveau-livre">Ajouter un livre</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Année</th>
+                <th>Statut</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="livres-tbody">
+              <tr>
+                <td colspan="5" class="empty-row">Chargement…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination" id="livres-pagination"></div>
+      </section>
+
+      <!-- ADHERENTS -->
+      <section id="adherents" class="view">
+        <header class="view-header">
+          <h2>Adhérents</h2>
+          <p>Liste des adhérents inscrits et leur historique d'emprunts.</p>
+        </header>
+
+        <div class="toolbar">
+          <button class="btn btn-primary" id="btn-nouvel-adherent">Ajouter un adhérent</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Contact</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="adherents-tbody">
+              <tr>
+                <td colspan="3" class="empty-row">Chargement…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- EMPRUNTS -->
+      <section id="emprunts" class="view">
+        <header class="view-header">
+          <h2>Emprunts</h2>
+          <p>Emprunts en cours et en retard.</p>
+        </header>
+
+        <div class="toolbar">
+          <button class="btn btn-primary" id="btn-nouvel-emprunt">Enregistrer un emprunt</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Livre</th>
+                <th>Adhérent</th>
+                <th>Emprunté le</th>
+                <th>Retour prévu</th>
+                <th>Statut</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="emprunts-tbody">
+              <tr>
+                <td colspan="6" class="empty-row">Chargement…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODALE générique -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="modal-title">Titre</h3>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <form id="modal-form"></form>
     </div>
+  </div>
 
+  <!-- Notifications -->
+  <div class="toast-stack" id="toast-stack"></div>
 
-    <!-- =====================================================
-         NOTIFICATIONS
-    ====================================================== -->
-    <div
-        class="toast-stack"
-        id="toast-stack"
-        aria-live="polite"
-        aria-atomic="true"
-    >
-        <!-- Notifications injectées en JavaScript -->
-    </div>
-
-
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
+
 </html>
