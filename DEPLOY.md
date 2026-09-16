@@ -26,17 +26,19 @@ configurer côté client.
   ou Git auto-hébergé).
 - Un service PostgreSQL déjà créé dans Dokploy (**Databases → PostgreSQL**).
 
-## 1. Importer le schéma dans PostgreSQL
+## 1. Import automatique du schéma
 
-`database/bibliothèque.sql` est un dump complet (schéma + éventuellement des
-données). Il n'est **pas exécuté automatiquement** au démarrage de
-l'application — à importer une seule fois, via le terminal du service
-PostgreSQL dans Dokploy ou avec `psql` depuis un poste ayant accès à la base :
+`database/bibliothèque.sql` (schéma + données de démo) est importé
+**automatiquement au premier démarrage** du conteneur, par
+`scripts/start.sh` : au boot, le script vérifie si la table
+`public.livres` existe déjà dans la base ; si non, il importe le dump via
+`psql`, puis démarre le serveur Node. Aux démarrages/redéploiements
+suivants, la table existe déjà et l'import est simplement sauté — aucune
+action manuelle n'est nécessaire, et rejouer le dump plusieurs fois ne pose
+pas de problème (il est ignoré, pas ré-exécuté).
 
-```bash
-psql "postgresql://<user>:<password>@<host interne dokploy>:5432/<database>" \
-  -f "database/bibliothèque.sql"
-```
+Il suffit donc que la base PostgreSQL vide existe côté Dokploy (étape 2) et
+que les variables d'environnement de connexion soient correctes.
 
 ## 2. Déployer l'application
 
@@ -72,8 +74,11 @@ mapper est `8080`.
 
 ## Vérification post-déploiement
 
-- `GET https://<domaine>/health` doit répondre `{"status":"ok"}`.
-- Les logs de l'application doivent afficher `Connecté à la base de données
-  avec succès !` — sinon, vérifier `DB_HOST`/`DB_USER`/`DB_PASSWORD` et que le
-  service PostgreSQL autorise les connexions depuis le réseau interne
-  Dokploy.
+- `GET https://<domaine>/health` doit répondre `{"status":"ok","database":"up"}`
+  (503 si la base est injoignable).
+- Les logs de déploiement doivent afficher soit `Base de données vide : import
+  du schéma initial...` suivi de `Import terminé.` (premier déploiement), soit
+  `Schéma déjà présent : import ignoré.` (déploiements suivants), puis
+  `Connecté à la base de données avec succès !` — sinon, vérifier
+  `DB_HOST`/`DB_USER`/`DB_PASSWORD` et que le service PostgreSQL autorise les
+  connexions depuis le réseau interne Dokploy.
