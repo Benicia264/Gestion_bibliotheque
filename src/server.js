@@ -1,6 +1,7 @@
-console.log("Démarrage du serveur...");
+
 const express = require('express');
 const logger = require('./middlewares/logger');
+const errorHandler = require('./middlewares/errorHandler');
 const auteurRoutes = require('./routes/auteurRoutes');
 const adherentRoutes = require('./routes/adherentRoutes');
 const livreRoutes = require('./routes/livreRoutes');
@@ -17,7 +18,8 @@ app.use('/api/adherents', adherentRoutes);
 app.use('/api/auteurs', auteurRoutes);
 app.use('/api/emprunts', empruntRoutes);
 app.use('/api/statistiques', statistiqueRoutes);
+app.use(errorHandler);
 const server = app.listen(port, () => {
     console.log(`Serveur démarré sur le port ${port}`);
 });
-console.log("Serveur en cours d'exécution...")
+
