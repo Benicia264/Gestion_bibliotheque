@@ -5,7 +5,7 @@ const livreModel = require('../models/livreModel');
 // RÉCUPÉRER TOUS LES EMPRUNTS
 // GET /api/emprunts
 
-const getEmprunts = async (req, res) => {
+const getEmprunts = async (req, res, next) => {
     try {
 
         const emprunts = await empruntModel.getAllEmprunts();
@@ -13,19 +13,18 @@ const getEmprunts = async (req, res) => {
         res.status(200).json(emprunts);
 
     } catch (error) {
-
-        res.status(500).json({
-            message: "Erreur lors de la récupération des emprunts",
-            error: error.message
-        });
+        next(error);
     }
 };
+
+   
 
 
 // RÉCUPÉRER UN EMPRUNT PAR SON ID
 // GET /api/emprunts/:id
 
-const getEmpruntById = async (req, res) => {
+const getEmpruntById = async (req, res, next) => {
+    
     try {
 
         const emprunt = await empruntModel.getEmpruntById(
@@ -41,11 +40,7 @@ const getEmpruntById = async (req, res) => {
         res.status(200).json(emprunt);
 
     } catch (error) {
-
-        res.status(500).json({
-            message: "Erreur lors de la récupération de l'emprunt",
-            error: error.message
-        });
+        next(error);
     }
 };
 
@@ -53,7 +48,8 @@ const getEmpruntById = async (req, res) => {
 // CRÉER UN EMPRUNT
 // POST /api/emprunts
 
-const createEmprunt = async (req, res) => {
+const createEmprunt = async (req, res, next) => {
+
     try {
 
         const {
@@ -126,10 +122,7 @@ const createEmprunt = async (req, res) => {
 
     } catch (error) {
 
-        res.status(500).json({
-            message: "Erreur lors de la création de l'emprunt",
-            error: error.message
-        });
+       next(error);
     }
 };
 
@@ -137,7 +130,7 @@ const createEmprunt = async (req, res) => {
 // ENREGISTRER LE RETOUR D'UN LIVRE
 // PUT /api/emprunts/:id/retour
 
-const retournerLivre = async (req, res) => {
+const retournerLivre = async (req, res, next) => {
     try {
 
         // 1. Récupérer l'emprunt concerné
@@ -200,10 +193,7 @@ const retournerLivre = async (req, res) => {
 
     } catch (error) {
 
-        res.status(500).json({
-            message: "Erreur lors du retour du livre",
-            error: error.message
-        });
+       next(error);
     }
 };
 
@@ -211,7 +201,7 @@ const retournerLivre = async (req, res) => {
 // RÉCUPÉRER LES EMPRUNTS EN COURS
 // GET /api/emprunts/en-cours
 
-const getEmpruntsEnCours = async (req, res) => {
+const getEmpruntsEnCours = async (req, res, next) => {
     try {
 
         const emprunts =
@@ -221,10 +211,7 @@ const getEmpruntsEnCours = async (req, res) => {
 
     } catch (error) {
 
-        res.status(500).json({
-            message: "Erreur lors de la récupération des emprunts en cours",
-            error: error.message
-        });
+        next(error);
     }
 };
 
@@ -232,7 +219,7 @@ const getEmpruntsEnCours = async (req, res) => {
 // RÉCUPÉRER LES EMPRUNTS EN RETARD
 // GET /api/emprunts/en-retard
 
-const getEmpruntsEnRetard = async (req, res) => {
+const getEmpruntsEnRetard = async (req, res, next) => {
     try {
 
         const emprunts =
@@ -241,13 +228,10 @@ const getEmpruntsEnRetard = async (req, res) => {
         res.status(200).json(emprunts);
 
     } catch (error) {
-
-        res.status(500).json({
-            message: "Erreur lors de la récupération des emprunts en retard",
-            error: error.message
-        });
+        next(error);
     }
 };
+        
 
 
 module.exports = {
