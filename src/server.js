@@ -13,6 +13,7 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(logger);
 app.use(express.static('public'));
+app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
 app.use('/api/livres', livreRoutes);
 app.use('/api/adherents', adherentRoutes);
 app.use('/api/auteurs', auteurRoutes);
